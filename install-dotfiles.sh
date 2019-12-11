@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
 install_pkg=''
+overwrite=''
 
 function getopt_args() {
-    while getopts ":p" opt; do
+    while getopts ":po" opt; do
         case $opt in
         "p")
             install_pkg=1
+            ;;
+        "o")
+            overwrite=1
             ;;
         *)
             echo "$0: undefined option argument."
@@ -44,7 +48,7 @@ else
     exit 1
 fi
 
-### set path and setting file names ###
+### get path and dotfile names ###
 
 ABS_PATH=$(cd $(dirname $0) && pwd)
 if [ -z "$ABS_PATH" ]; then
@@ -65,7 +69,7 @@ echo "Target directory : $HOME"
 echo "Modifying $bash_file"
 src_str="[ -f \$HOME/$bash_file.swlee ] && . \$HOME/$bash_file.swlee"
 tgt_tail=`cat $HOME/$bash_file | tail -n1`
-if [ "$src_str" == "$tgt_tail" ]; then
+if [ -z "$overwrite" ] && [ "$src_str" == "$tgt_tail" ]; then
     echo "  already importing $bash_file.swlee! skipping.."
 else
     printf "\n########## added automatically by $(basename $0) ##########\n" >> $HOME/$bash_file
@@ -77,7 +81,7 @@ fi
 cp $DOTFILES/.bash_swlee $DOTFILES/$bash_file.swlee
 while read -r file; do
     echo "Copying $file"
-    if [ -f "$HOME/$file" ]; then
+    if [ -z $overwrite ] && [ -f "$HOME/$file" ]; then
         echo "  already exists! skipping.."
     else
         mkdir -p `dirname "$HOME/$file"`
