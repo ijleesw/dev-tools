@@ -12,6 +12,23 @@ alias cint='rlwrap $HOME/dev-tools/cint.py'
 alias getset='rlwrap $HOME/dev-tools/getset.py'
 alias scheme='rlwrap scheme'
 
+# macos settings
+if [[ $OSTYPE == "darwin"* ]]; then
+    HISTCONTROL=ignoredups
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+
+    export CLICOLOR=1
+    export LSCOLORS=GxFxCxDxBxegedabagaced
+    export GREP_OPTIONS='--color=auto'
+    export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+    alias ll='ls -l'
+    alias la='ls -a'
+    alias lf='ls -GF'
+    alias typora="open -a typora"
+    alias grep="grep --color=auto "
+fi
+
 # tmux as a default terminal
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
