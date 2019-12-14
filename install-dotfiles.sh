@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-bash_ident='swlee'
+bash_ident=$USER
 install_pkg='N'
 overwrite='N'
 bash_file=''
@@ -46,7 +46,7 @@ fi
 DOTFILES=$ABS_PATH/dotfiles
 
 cd $DOTFILES > /dev/null 2>&1
-files=$(find . -type f | cut -c 3- | sed "s/.bash_$bash_ident/$bash_file.$bash_ident/g" | tr ' ' '\n')
+files=$(find . -type f | cut -c 3- | sed "s/.bash_settings/$bash_file.$bash_ident/g" | tr ' ' '\n')
 cd - > /dev/null 2>&1
 
 ### check before continue ###
@@ -96,7 +96,7 @@ fi
 
 ### dotfiles ###
 
-cp $DOTFILES/.bash_$bash_ident $DOTFILES/$bash_file.$bash_ident
+cp $DOTFILES/.bash_settings $DOTFILES/$bash_file.$bash_ident
 while read -r file; do
     echo "Copying $file"
     if [ $overwrite == "N" ] && [ -f "$HOME/$file" ]; then
