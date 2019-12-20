@@ -1,14 +1,15 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic setting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colorscheme
+Plugin 'octol/vim-cpp-enhanced-highlight'
+set background=dark
+color gruvbox
+
 " Syntax highlighting
 if has ("syntax")
     syntax on
 endif
-
-" Colorscheme
-set background=dark
-color gruvbox
 
 " Indentation
 set autoindent
