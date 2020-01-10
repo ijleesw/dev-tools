@@ -1,0 +1,91 @@
+# My aliases
+alias v='vim '
+alias sudo='sudo '
+alias tbsql='rlwrap tbsql'
+alias p='python3.7 '
+alias gsq='gnome-session-quit'
+alias :q='exit'
+alias :ㅂ='exit'
+alias xgrep='grep -Iirn '
+alias docker='sudo docker '
+alias cint='rlwrap $HOME/dev-tools/cint.py'
+alias getset='rlwrap $HOME/dev-tools/getset.py'
+alias scheme='rlwrap scheme'
+
+# macos settings
+if [[ $OSTYPE == "darwin"* ]]; then
+    HISTCONTROL=ignoredups
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+
+    export CLICOLOR=1
+    export LSCOLORS=GxFxCxDxBxegedabagaced
+    export GREP_OPTIONS='--color=auto'
+    export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+    alias ll='ls -l'
+    alias la='ls -A'
+    alias lf='ls -GF'
+    alias typora="open -a typora"
+    alias grep="grep --color=auto "
+fi
+
+# tmux as a default terminal
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
+
+psg() {
+    ps -ef | grep $1
+}
+
+pspid() {
+    ps -ef | grep $1 | grep -v grep | awk '{printf "%s\t", $2; for (i=8; i<=NF; i++) printf " %s", $i; printf "\n"}' | grep $1
+}
+
+lsg() {
+    if (( $# == 1 ))
+    then
+        ls | grep $1
+    elif (( $# == 2))
+    then
+        ls $1 | grep $2
+    else
+        echo 'lsg: should have 1 or 2 arguments.'
+    fi
+}
+
+cla() {
+    clang++ -std=c++11 -g a.cpp && ./a.out
+}
+
+cl() {
+    clang++ -std=c++11 $* && ./a.out
+}
+
+k9() {
+    kill -9 $*
+}
+
+kall() {
+    ps aux | grep $1 | grep -v grep | awk '{print $2}' | xargs kill -9
+}
+
+gitrb() {
+    files=`git st | grep '^ M' | head -1 | awk '{print $2}'`
+    if [ -z $files ]; then
+        echo 'Nothing to rollback.'
+    else
+        git st | grep '^ M' | awk '{print $2}'
+        git st | grep '^ M' | awk '{print $2}' | xargs git co --
+        echo 'Rollback done.'
+    fi
+}
+
+gdif() {
+    if [ "$#" -ne 1 ]; then
+        printf "Usage: gdif <commit_hash>\n"
+        return 1
+    fi
+
+    git diff $1~ $1
+}
