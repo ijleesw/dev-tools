@@ -14,7 +14,7 @@ alias scheme='rlwrap scheme'
 
 # macos settings
 if [[ $OSTYPE == "darwin"* ]]; then
-    HISTCONTROL=ignoredups
+    HISTCONTROL=ignoreboth
     export BASH_SILENCE_DEPRECATION_WARNING=1
 
     export CLICOLOR=1
