@@ -47,8 +47,8 @@ int main() {
     unordered_set<string> filenames;
 
     for (int i = 1; i <= count; ++i) {
+        string filename = random_string(64);
         while (true) {
-            string filename = random_string(64);
             if (filenames.find(filename) != end(filenames))
                 continue;
             filenames.insert(filename);
