@@ -1,3 +1,5 @@
+[core]
+    editor = vim
 [alias]
     st = status
     co = checkout
@@ -6,5 +8,5 @@
     rs = reset HEAD
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [user]
-	email =
-	name =
+	  email =
+  	name =
