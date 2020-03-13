@@ -47,12 +47,10 @@ int main() {
     unordered_set<string> filenames;
 
     for (int i = 1; i <= count; ++i) {
-        string filename = random_string(64);
-        while (true) {
-            if (filenames.find(filename) != end(filenames))
-                continue;
-            filenames.insert(filename);
-        }
+        string filename;
+        while (filenames.find((filename = random_string(64))) != end(filenames)) {}
+        filenames.insert(filename);
+
         ll size = base_size;
 
         FILE *f = fopen(filename.c_str(), "wb"); {
