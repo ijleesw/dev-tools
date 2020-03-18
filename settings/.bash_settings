@@ -91,5 +91,7 @@ gdif() {
 }
 
 tmuxka() {
-    tmux ls | grep -v attached | awk {' print $1 '} | sed 's/://' | xargs -I@ tmux kill-session -t @
+    li=$(tmux ls | grep -v attached | awk {' print $1 '} | sed 's/://')
+    echo "$li" | xargs -I@ tmux kill-session -t @
+    echo "$(echo $li | wc | awk '{ print $2 }') tmux sessions killed -- $(echo $li)"
 }
