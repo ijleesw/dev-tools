@@ -89,3 +89,7 @@ gdif() {
 
     git diff $1~ $1
 }
+
+tmuxka() {
+    tmux ls | grep -v attached | awk {' print $1 '} | sed 's/://' | xargs -I@ tmux kill-session -t @
+}
