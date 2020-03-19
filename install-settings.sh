@@ -25,7 +25,7 @@ shift $((OPTIND-1))
 
 ### check os and set bash_file ###
 
-if [ "$OSTYPE" == "linux-gnu" ]; then
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Linux detected."
     bash_file='.bashrc'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -69,7 +69,7 @@ fi; echo ""
 
 if [ "$install_pkg" == "Y" ]; then
     echo "Installing packages.."
-    if [ "$OSTYPE" == "linux-gnu" ]; then
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         sudo apt-get install -y git vim tmux
     else
         brew install git vim tmux
