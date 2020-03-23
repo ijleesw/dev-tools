@@ -1,0 +1,6 @@
+view
+color zenburn
+
+set hlsearch    " highlight result
+set ic          " ignore case
+set incsearch   " show result w/o <Enter>

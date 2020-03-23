@@ -4,6 +4,7 @@ bash_ident=$USER
 install_pkg='N'
 overwrite='N'
 bash_file=''
+packages='git vifm vim tmux'
 
 ### getopts ###
 
@@ -70,9 +71,9 @@ fi; echo ""
 if [ "$install_pkg" == "Y" ]; then
     echo "Installing packages.."
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        sudo apt-get install -y git vim tmux
+        sudo apt-get install -y $packages
     else
-        brew install git vim tmux
+        brew install $packages
     fi
 
     if [ "$?" != "0" ]; then
@@ -99,9 +100,18 @@ fi
 cp $SETTINGS/.bash_settings $SETTINGS/$bash_file.$bash_ident
 while read -r file; do
     echo "Copying $file"
-    if [ $overwrite == "N" ] && [ -f "$HOME/$file" ]; then
-        echo "  already exists! skipping.."
-    else
+    if [ $overwrite == "N" ]; then
+        if [ -f "$HOME/$file" ]; then
+            echo "  already exists! skipping.."
+        else
+            mkdir -p $(dirname "$HOME/$file")
+            cp $SETTINGS/$file $HOME/$file
+        fi
+    else  # $overwrite == "Y"
+        if [ -f "$HOME/$file" ]; then
+            echo "  already exists! Original file moved to $file.bak"
+            mv $HOME/$file $HOME/$file.bak
+        fi
         mkdir -p $(dirname "$HOME/$file")
         cp $SETTINGS/$file $HOME/$file
     fi
@@ -111,7 +121,7 @@ rm $SETTINGS/$bash_file.$bash_ident
 ### bits/stdc++.h ###
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "Copying stdc++.h"
+    echo "Copying stdc++.h to /usr/local/include/bits/ -- overwrite option does not hold"
     sudo mkdir -p /usr/local/include/bits/
     if [ -f "/usr/local/include/bits/stdc++.h" ]; then
         echo "  already exists! skipping.."
