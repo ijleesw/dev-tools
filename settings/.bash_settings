@@ -2,7 +2,7 @@
 alias v='vim '
 alias sudo='sudo '
 alias tbsql='rlwrap tbsql'
-alias p='python3.7 '
+alias p='python3 '
 alias gsq='gnome-session-quit'
 alias :q='exit'
 alias :ㅂ='exit'
@@ -15,7 +15,7 @@ alias scheme='rlwrap scheme'
 # ls aliases
 alias ll='ls -lh'
 alias la='ls -A'
-alias lf='ls -GF'
+alias ls='ls -GF'
 
 # macos settings
 if [[ $OSTYPE == "darwin"* ]]; then
