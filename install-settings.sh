@@ -26,12 +26,14 @@ shift $((OPTIND-1))
 
 ### check os and set bash_file ###
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+is_linux() { [[ "$OSTYPE" == "linux-gnu"* ]]; }
+is_macos() { [[ "$OSTYPE" == "darwin"* ]]; }
+
+bash_file='.bashrc'
+if is_linux; then
     echo "Linux detected."
-    bash_file='.bashrc'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif is_macos; then
     echo "macOS detected."
-    bash_file='.bash_profile'
 else
     echo "$0: unknown os -- $OSTYPE."
     exit 1
@@ -70,10 +72,13 @@ fi; echo ""
 
 if [ "$install_pkg" == "Y" ]; then
     echo "Installing packages.."
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if is_linux; then
         sudo apt-get install -y $packages
-    else
+    elif is_macos; then
         brew install $packages
+    else
+        echo "$0: unknown os -- $OSTYPE."
+        exit 1
     fi
 
     if [ "$?" != "0" ]; then
@@ -85,14 +90,31 @@ fi
 
 ### bash file ###
 
-echo "Modifying $bash_file"
-src_str="[ -f \$HOME/$bash_file.$bash_ident ] && . \$HOME/$bash_file.$bash_ident"
-grep_res=$(cat $HOME/$bash_file | grep "\\$src_str")
-if [ "$overwrite" == "N" ] && [ ! -z "$grep_res" ]; then
-    echo "  already importing $bash_file.$bash_ident! skipping.."
-else
-    printf "\n########## added automatically by $(basename $0) ##########\n" >> $HOME/$bash_file
-    echo $src_str >> $HOME/$bash_file
+# $1: import parent
+# $2: import child
+import_bash_file() {
+    if [ "$#" -ne "2" ]; then
+        echo "Usage: import_bash_file <parent> <child>"
+        exit 1
+    fi
+
+    echo "Modifying $1"
+    src_str="[ -f \$HOME/$2 ] && . \$HOME/$2"
+    grep_res=$(cat $HOME/$1 | grep "\\$src_str")
+    if [ "$overwrite" == "N" ] && [ ! -z "$grep_res" ]; then
+        echo "  already importing $2! skipping.."
+    else
+        printf "\n########## added automatically by $(basename $0) ##########\n" >> $HOME/$1
+        echo $src_str >> $HOME/$1
+        if [ "$1" == ".bashrc" ]; then
+            echo 'if [ -z "$VIFM" ]; then vifm; fi' >> $HOME/$1     # set vifm as a default
+        fi
+    fi
+}
+
+import_bash_file $bash_file $bash_file.$bash_ident
+if is_macos; then
+    import_bash_file .bash_profile $bash_file
 fi
 
 ### settings ###
@@ -120,7 +142,7 @@ rm $SETTINGS/$bash_file.$bash_ident
 
 ### bits/stdc++.h ###
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if is_macos; then
     echo "Copying stdc++.h to /usr/local/include/bits/ -- overwrite option does not hold"
     sudo mkdir -p /usr/local/include/bits/
     if [ -f "/usr/local/include/bits/stdc++.h" ]; then

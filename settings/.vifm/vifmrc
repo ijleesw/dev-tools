@@ -1,6 +1,23 @@
-view
+let $BASH_ENV='~/.bashrc'
+
+view            " preview mode
 color zenburn
 
 set hlsearch    " highlight result
 set ic          " ignore case
 set incsearch   " show result w/o <Enter>
+
+" shell shortcuts
+noremap s :shell<CR>
+noremap S :!  ; readp<left><left><left><left><left><left><left><left>
+
+" rename shortcuts
+noremap r cW
+noremap R cw
+
+" normal/view switch shortcuts
+nnoremap <tab> <s-tab>
+qnoremap <tab> <s-tab>
+
+" view mode shortcuts
+qnoremap i qi
