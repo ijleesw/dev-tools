@@ -17,7 +17,6 @@ alias readp='read -p "Press ENTER or type command to continue"'
 # ls aliases
 alias ll='ls -lh'
 alias la='ls -A'
-alias ls='ls -GF'
 
 # macos settings
 if [[ $OSTYPE == "darwin"* ]]; then
