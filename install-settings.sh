@@ -106,9 +106,9 @@ import_bash_file() {
     else
         printf "\n########## added automatically by $(basename $0) ##########\n" >> $HOME/$1
         echo $src_str >> $HOME/$1
-        if [ "$1" == ".bashrc" ]; then
-            echo 'if [ -z "$VIFM" ]; then vifm; fi' >> $HOME/$1     # set vifm as a default
-        fi
+#         if [ "$1" == ".bashrc" ]; then
+#             echo 'if [ -z "$VIFM" ]; then vifm; fi' >> $HOME/$1     # set vifm as a default
+#         fi
     fi
 }
 
