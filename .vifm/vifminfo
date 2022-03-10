@@ -1,0 +1,27 @@
+# You can edit this file by hand, but it's recommended not to do that.
+
+# Marks:
+
+# Bookmarks:
+
+# Trash content:
+t/Users/user/.local/share/vifm/Trash/000_settings
+	/Users/user/maps/settings
+t/Users/user/.local/share/vifm/Trash/000_vim_lib.bak
+	/Users/user/vim_lib.bak
+t/Users/user/.local/share/vifm/Trash/000_cscope.out
+	/Users/user/maps/sewol/cscope.out
+t/Users/user/.local/share/vifm/Trash/000_tags
+	/Users/user/maps/sewol/tags
+t/Users/user/.local/share/vifm/Trash/000_source_list
+	/Users/user/maps/sewol/source_list
+t/Users/user/.local/share/vifm/Trash/000_sewol.cscope
+	/Users/user/maps/sewol.cscope
+t/Users/user/.local/share/vifm/Trash/000_sewol.ctags
+	/Users/user/maps/sewol.ctags
+t/Users/user/.local/share/vifm/Trash/000_source_list
+	/Users/user/maps/source_list
+t/Users/user/.local/share/vifm/Trash/000_.bashrc.user
+	/Users/user/new-settings/macos/.bashrc.user
+t/Users/user/.local/share/vifm/Trash/000_asdf
+	/Users/user/maps/osrm/src/contractor/asdf
